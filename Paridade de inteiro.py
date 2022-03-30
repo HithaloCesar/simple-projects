@@ -1,4 +1,4 @@
-# Paridade de um número inteiro
+# Verifica a paridade de um número inteiro
 
 while True:
     while True:
@@ -9,7 +9,6 @@ while True:
             print("O valor inserido não é válido!\n")
         if type(n) == int:
             break
-
     if n % 2 == 0:
         print(n, "é par.\n")
     else:
