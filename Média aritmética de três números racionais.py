@@ -26,7 +26,7 @@ while True:
         try:
             x3 = float(x3)
         except ValueError:
-            print("O valor inserido é inválitesdo!\n")
+            print("O valor inserido é inválido!\n")
         if type(x3) == float:
             break
     M = round((x1 + x2 + x3) / 3, 2)
