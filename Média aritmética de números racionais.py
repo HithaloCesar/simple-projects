@@ -30,4 +30,4 @@ while True:
         if type(x3) == float:
             break
     M = round((x1 + x2 + x3) / 3, 2)
-    print(f"A média aritmética de {x1}, {x2} e {x3} é {M}.\n\n")
+    print(f"A média aritmética de desses números é {M}.\n\n")
