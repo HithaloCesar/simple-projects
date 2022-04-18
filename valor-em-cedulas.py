@@ -1,78 +1,48 @@
-from numpy import True_
-
+cedulas = [2, 5, 10, 20, 50, 100, 200]
+moedas = [0.01, 0.05, 0.10, 0.25, 0.50, 1]
 
 while True:
 
-    cedulas = []
-
-    faltam_cedulas = True
-
-    start = input("Digite \"br\" para carregar os valores de cédulas e de moedas brasileiras, ou aperte enter para inserir valores customizados: ")
-    if start != "br" and start != "":
-        print("Erro: resposta inválida.")
-    elif start == "br":
-        cedulas = [0.01, 0.05, 0.10, 0.25, 0.50, 1, 2, 5, 10, 25, 50, 100, 200]
-        print ("")
-    else:
-        print("")
-        while faltam_cedulas:
-            while True:
-                cedula_atual = (input("Insira um valor de cédula ou de moeda para adicionar, ou aperte enter para finalizar: "))
-                if cedula_atual == "":
-                    if cedulas == []:
-                        print("\nErro: o programa exige pelo menos um valor de cédula ou de moeda.\n")
-                    else:
-                        faltam_cedulas = False
-                        print("")
-                        break
-                else:
-                    try:
-                        cedula_atual = float(cedula_atual)
-                    except ValueError:
-                        print("\nErro: valor inválido. Ele deve ser um número racional positivo, e o separador decimal, se presente, deve ser um ponto.\n")
-                    if type(cedula_atual) == float:
-                        if cedula_atual <= 0:
-                            print("\nErro: valor inválido. Ele deve ser um número racional positivo, e o separador decimal, se presente, deve ser um ponto.\n")
-                        elif cedula_atual in cedulas:
-                            print("\nErro: valor já inserido.\n")
-                        else:
-                            if cedula_atual % 1 == 0:
-                                cedula_atual = int(cedula_atual)
-                            cedulas.append(cedula_atual)
-                            cedulas.sort()
-                            print("")
-                            print("Valores de cédulas inseridos: ", end="")
-                            for i in range(len(cedulas)):
-                                if i != len(cedulas) - 1:
-                                    print (cedulas[i], " | ", sep="", end="")
-                                else:
-                                    print (cedulas[i])
-                                    print("")
-                            break
-    
     while True:
         n = input("Insira o valor monetário: ")
         try:
             n = float(n)
         except ValueError:
-            print("Erro: valor inválido. Ele deve ser um número racional, e o separador decimal, se presente, deve ser um ponto.")
+            print("Erro: valor inválido. Ele deve ser um número racional positivo, e o separador decimal, se presente, deve ser um ponto.\n")
         if type(n) == float:
-            print("")
-            break
-
-    cedulas.sort(reverse=True)
-    qtd_cada_cedula = []
-    for i in range(len(cedulas)):
-        qtd_cada_cedula.append(n // cedulas[i])
-        n %= cedulas[i]
-        if qtd_cada_cedula[i] != 0:
-            if cedulas[i] > 1:
-                print(qtd_cada_cedula[i], " nota(s) ou moeda(s) de ", cedulas[i], " reais.", sep="")
-            elif cedulas[i] == 1:
-                print(qtd_cada_cedula[i], " nota(s) ou moeda(s) de ", cedulas[i], " real.", sep="")
-            elif cedulas[i] < 1 and cedulas[i] > 0.01:
-                print(qtd_cada_cedula[i], " nota(s) ou moeda(s) de ", cedulas[i] * 100, " centavo(s).", sep="")
+            if n <= 0:
+                print("Erro: valor inválido. Ele deve ser um número racional positivo, e o separador decimal, se presente, deve ser um ponto.\n")
             else:
-                print(qtd_cada_cedula[i], " nota(s) ou moeda(s) de ", cedulas[i] * 100, " centavo.", sep="")
-    
+                print("")
+                break
+            
+    cedulas_moedas = []
+    cedulas_moedas.extend(cedulas)
+    cedulas_moedas.extend(moedas)
+    cedulas_moedas.sort(reverse=True)
+    qtd_cada_cedula_moeda = []
+    for i in range(len(cedulas_moedas)):
+        qtd_cada_cedula_moeda.append(int((n * 100) // (cedulas_moedas[i] * 100)))
+        n %= cedulas_moedas[i]
+        n = round(n, 2)
+        if cedulas_moedas[i] in cedulas:
+            if qtd_cada_cedula_moeda[i] > 1:
+                cedula_moeda_sing_plur = "cédulas"
+            else:
+                cedula_moeda_sing_plur = "cédula"
+        else:
+            if qtd_cada_cedula_moeda[i] > 1:
+                cedula_moeda_sing_plur = "moedas"
+            else:
+                cedula_moeda_sing_plur = "moeda"
+        if qtd_cada_cedula_moeda[i] != 0:
+            if cedulas_moedas[i] > 1:
+                print(qtd_cada_cedula_moeda[i], " ", cedula_moeda_sing_plur, " de ", cedulas_moedas[i], " reais.", sep="")
+            elif cedulas_moedas[i] == 1:
+                print(qtd_cada_cedula_moeda[i], " ", cedula_moeda_sing_plur, " de ", cedulas_moedas[i], " real.", sep="")
+            elif cedulas_moedas[i] < 1 and cedulas_moedas[i] > 0.01:
+                print(qtd_cada_cedula_moeda[i], " ", cedula_moeda_sing_plur, " de ", int(cedulas_moedas[i] * 100), " centavos.", sep="")
+            else:
+                print(qtd_cada_cedula_moeda[i], " ", cedula_moeda_sing_plur, " de ", int(cedulas_moedas[i] * 100), " centavo.", sep="")
+
     print("\n\n", "-" * 20, "\n\n", sep="")
